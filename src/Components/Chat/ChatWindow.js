@@ -1,8 +1,8 @@
 import React from 'react'
 
-function ChatWindow() {
+function ChatWindow(props) {
     return (
-        <div>
+        <div className="m-3 p-3 d-flex flex-column">
             
         </div>
     )
