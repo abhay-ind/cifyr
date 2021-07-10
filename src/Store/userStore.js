@@ -17,8 +17,6 @@ const initState = {
 const userReducer = (state = initState, action) => {
   switch (action) {
     case action.type == LOGIN:
-      localStorage.setItem("isLogin", true);
-      localStorage.setItem('token',action.payload.token)
       return { ...state, isLogin: true };
     case action.type == LOGOUT:
       return { ...state, isLogin: false };
@@ -31,11 +29,18 @@ export const userSlice = createSlice({
   name: "user",
   initialState: initState,
   reducers: {
-    LOGIN: (state) => {
+    LOGIN: (state, action) => {
       state.isLogin = true;
+      localStorage.setItem("isLogin", true);
+      localStorage.setItem("token", action.payload.token);
     },
-    LOGOUT: (state) => {
+    LOGOUT: (state, action) => {
       state.isLogin = false;
+      localStorage.removeItem("isLogin")
+      localStorage.removeItem("token")
+      action.payload.history.push('/')
+      // localStorage.setItem("isLogin", false);
+      // localStorage.setItem("token", null);
     },
     UPDATE_USER_DETAILS: (state, action) => {
       state = { ...state, ...action.payload };
