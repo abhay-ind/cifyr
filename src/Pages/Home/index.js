@@ -1,9 +1,10 @@
 import React from 'react'
+import Requests from './Requests'
 
 function Home() {
     return (
         <div>
-            Home
+            <Requests/>
         </div>
     )
 }
