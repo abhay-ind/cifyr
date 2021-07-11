@@ -97,8 +97,8 @@ function Card(props) {
           </div>
         </div>
         <ProgressBar
-          label={"$ " + props.recv}
-          now={(+props.recv / +props.total) * 100}
+          label={" "+currencyToSymbolMap[props.curr] +" "  + (props.recv || '100')}
+          now={((+props.recv ||1000) / +props.total) * 100}
         />
         {showComplete && (
           <div className="m-2">

@@ -61,7 +61,7 @@ function CreatePost() {
             <Form.Control
               as="textarea"
               rows={5}
-              placeholder="Please enter a title"
+              placeholder="Please enter a description"
               required
               id="createPostDesc"
             />
