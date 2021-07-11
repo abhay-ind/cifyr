@@ -11,7 +11,7 @@ import Login from "./Pages/Login";
 import ChatSystem from "./Components/Chat";
 import CreatePost from "./Pages/CreatePost";
 import Chat from "./Components/Chat1";
-import {addComment,createPost,createTransaction,createUser, getUserProfile, updateTransactionAddInvest} from "./Services/firebase/User";
+import {addComment,allTimeTopInvestors,createPost,createTransaction,createUser, getUserProfile, lastWeekTopInvestors, updateTransactionAddInvest} from "./Services/firebase/User";
 // import Store from "./Store";
 // console.log();
 function App() {
@@ -22,7 +22,12 @@ function App() {
   console.log(getUserProfile("Abhay"))
   // createTransaction("Abjhas","Benefic1234","kjaskj",12921);
   updateTransactionAddInvest("Abjhas","absa",1212)
+  updateTransactionAddInvest("Abjhas1","a2bsa",1202)
+  updateTransactionAddInvest("Abjhas2","a3bsa",1202)
   createPost("Abhay1",{hello:"hi"})
+  console.log(allTimeTopInvestors())
+  console.log(lastWeekTopInvestors())
+  
   return (
     <React.Fragment>
       <div className="App">
