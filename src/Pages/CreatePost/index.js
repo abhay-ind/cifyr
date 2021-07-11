@@ -36,7 +36,7 @@ function CreatePost() {
           <Form.Group controlId="formBasicEmail">
             <Form.Label>Post Description</Form.Label>
             <Form.Control
-              as="textarea"
+              as="textarea" 
               rows={5}
               placeholder="Please enter a title"
               required

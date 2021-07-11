@@ -1,6 +1,8 @@
-import logo from "./logo.svg";
+// import logo from "./logo.svg";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Home from "./Pages/Home";
@@ -21,7 +23,6 @@ function App(props) {
   console.log(user);
   const [startup, setStartup] = useState(true);
   useEffect(() => {
-  
     if (startup) {
       if (localStorage.getItem("isLogin")) {
         // console.log('here lgoin')

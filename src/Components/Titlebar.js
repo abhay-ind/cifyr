@@ -4,14 +4,15 @@ import { Navbar, Nav, Form, FormControl, Button } from "react-bootstrap";
 import { connect, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { LOGOUT } from "../Store/userStore";
+import logo from "../res/images/logo_big.png"
 function Titlebar(props) {
   const user = useSelector((state) => state.user);
   const history = useHistory();
   return (
     <>
-      <Navbar bg="dark" variant="dark">
+      <Navbar id="titlebar" bg="dark" variant="dark" >
         <Link to="/">
-          <Navbar.Brand>Cifyr</Navbar.Brand>
+          <Navbar.Brand><img src={logo} style={{width:80}}/></Navbar.Brand>
         </Link>
         <Nav className="mr-auto">
           {/* <Nav.Link href="home">Home</Nav.Link>

@@ -2,16 +2,32 @@ import { mdiTimerSand, mdiTimerSandEmpty, mdiTimerSandFull } from "@mdi/js";
 import { INR } from "currency-symbol-map/map";
 import React, { useState } from "react";
 import { Card as BCard, ProgressBar } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
 import InvestorIcon from "../../Components/InvestorIcon";
 import { mock_bg_url, mock_img_url } from "../../Store/mock";
+let timeout = null;
 function Card(props) {
   const [showComplete, setShowComplete] = useState(false);
+  const history = useHistory();
   return (
     <div>
       {/* <section> */}
       <BCard
-        onMouseOver={() => setShowComplete(true)}
-        onMouseOut={() => setShowComplete(false)}
+        onClick={() => {
+          history.push("/posts/" + props.id);
+        }}
+        onMouseOver={() => {
+          console.log('enter')
+          setShowComplete(true);
+          // if (timeout) clearTimeout(timeout);
+        }}
+        onMouseOut={() => {
+          console.log('leave')
+          setShowComplete(false);
+          // timeout = setTimeout(() => {
+          //   timeout=null;
+          // }, 500);
+        }}
         className="d-flex m-1"
         style={{
           width: "fit-content",
@@ -21,7 +37,8 @@ function Card(props) {
           border: 0,
           background: "rgb(250 250 250)",
           boxShadow: showComplete ? "0 0 15px grey" : "",
-          cursor:'pointer'
+          cursor: "pointer",
+          // position: showComplete ? "absolute" : "relative",
         }}
       >
         <img
@@ -45,7 +62,8 @@ function Card(props) {
           >
             Simson Watson
           </h5>
-          <p className="text-truncate p-1 m-1 mb-2">{props.desc}</p>
+          <h6 className="text-truncate p-1 m-1 mb-2">{props.title}</h6>
+          {showComplete && <p className="p-1 ml-3 mr-3 mb-2 ">{props.desc}</p>}
           <div
             className="d-flex ml-3 mr-3 mb-2"
             style={{ justifyContent: "space-between" }}
