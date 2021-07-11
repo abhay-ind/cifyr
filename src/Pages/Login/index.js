@@ -7,9 +7,10 @@ import {
   GoogleLoginButton,
   TwitterLoginButton,
 } from "react-social-login-buttons";
+import firebase from "firebase";
 import { googleSignIn } from "../../Services/firebase/fbAuth";
 import { LOGIN } from "../../Store/userStore";
-
+var provider = new firebase.auth.FacebookAuthProvider();
 function Login(props) {
   const dispatchLoginEvent = (token) => {
     //   useDispatch({ type: LOGIN });
@@ -103,11 +104,68 @@ function Login(props) {
                 width: "33%",
                 fontSize: 12,
               }}
+              
+              onClick={() => {
+                firebase
+                  .auth()
+                  .signInWithPopup(new firebase.auth.FacebookAuthProvider())
+                  .then((result) => {
+                    if (result.credential) {
+                      /** @type {firebase.auth.OAuthCredential} */
+                      var credential = result.credential;
+
+                      // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+                      var token = credential.accessToken;
+                      // ...
+                    }
+                    dispatchLoginEvent(token);
+                    // The signed-in user info.
+                    var user = result.user;
+                  })
+                  .catch((error) => {
+                    // Handle Errors here.
+                    var errorCode = error.code;
+                    var errorMessage = error.message;
+                    // The email of the user's account used.
+                    var email = error.email;
+                    // The firebase.auth.AuthCredential type that was used.
+                    var credential = error.credential;
+                    // ...
+                  });
+              }}
             />
             <TwitterLoginButton
               style={{
                 width: "33%",
                 fontSize: 12,
+              }}
+              onClick={() => {
+                firebase
+                  .auth()
+                  .signInWithPopup(new firebase.auth.TwitterAuthProvider())
+                  .then((result) => {
+                    if (result.credential) {
+                      /** @type {firebase.auth.OAuthCredential} */
+                      var credential = result.credential;
+
+                      // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+                      var token = credential.accessToken;
+                      // ...
+                    }
+                    dispatchLoginEvent(token);
+                    // The signed-in user info.
+                    var user = result.user;
+                  })
+                  .catch((error) => {
+                    // Handle Errors here.
+                    var errorCode = error.code;
+                    var errorMessage = error.message;
+                    // The email of the user's account used.
+                    var email = error.email;
+                    // The firebase.auth.AuthCredential type that was used.
+                    var credential = error.credential;
+                    // ...
+                  });
               }}
             />
           </Form.Group>

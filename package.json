@@ -18,6 +18,10 @@
     "react-scripts": "4.0.3",
     "react-social-login-buttons": "^3.4.0",
     "redux": "^4.1.0",
+<<<<<<< HEAD
+=======
+    "socket.io-client": "^4.1.2",
+>>>>>>> abhay
     "web-vitals": "^1.0.1"
   },
   "scripts": {
