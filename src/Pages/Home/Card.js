@@ -9,7 +9,7 @@ import React, { useState } from "react";
 import { Card as BCard, ProgressBar } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import InvestorIcon from "../../Components/InvestorIcon";
-import { mock_bg_url, mock_img_url } from "../../Store/mock";
+import { mock_bg_urls, mock_img_url } from "../../Store/mock";
 let timeout = null;
 function Card(props) {
   // console.log(props.isCommentScreen)
@@ -53,7 +53,7 @@ function Card(props) {
           style={{
             height: "auto",
           }}
-          src={mock_bg_url}
+          src={props.src || mock_bg_urls[1]}
         />
         <div className="d-flex flex-column p-2">
           <h5

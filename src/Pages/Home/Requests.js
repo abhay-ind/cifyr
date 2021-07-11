@@ -4,6 +4,7 @@ import { Carousel } from "react-bootstrap";
 import { connect } from "react-redux";
 import Slider from "react-slick";
 import { getPosts } from "../../Services/firebase/User";
+import { mock_bg_urls } from "../../Store/mock";
 import { UPDATE_POSTS } from "../../Store/postStore";
 import Card from "./Card";
 // import { Card } from "react-bootstrap";
@@ -52,12 +53,13 @@ function Requests(props) {
         {/* {console.log(posts)} */}
         {Object.keys(posts || {}).length > 0 ? (
           <Slider {...settings}>
-            {Object.keys(posts).map((el) => (
+            {Object.keys(posts).map((el,idx) => (
               <Card
                 id={el}
                 name={posts[el].name}
                 title={posts[el].title}
                 desc={posts[el].desc}
+                src={mock_bg_urls[idx % mock_bg_urls.length]}
                 // recv={posts[el].title}
                 total={posts[el].amount}
                 curr={posts[el].curr}
