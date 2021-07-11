@@ -59,24 +59,54 @@ export async function createPost(userId, data) {
     .child("posts/" + newPostKey.key)
     .set({ postId: newPostKey.key });
 }
-
 export async function getPostsByUid(userId) {
-  let res = [];
+  var res = [],
+    r1 = [];
   await database
-    .ref("Posts")
-    .equalTo(userId)
+    .ref("Beneficiary")
+    .child(userId)
+    .child("posts")
+    .get()
     .then((snapshot) => {
       if (snapshot.exists()) {
+        // console.log(snapshot.val())
         res = snapshot.val();
-      } else {
-        res = null;
+        // res=Array.from(res)
       }
     })
     .catch((e) => {
       console.log(e);
     });
-  return res;
+  for (var key in res) {
+    // console.log(key)
+    await database
+      .ref("Posts")
+      .child(key)
+      .get()
+      .then((s) => {
+        if (s.exists()) r1.push(s.val());
+      });
+  }
+
+  return r1;
 }
+// export async function getPostsByUid(userId) {
+//   let res = [];
+//   await database
+//     .ref("Posts")
+//     .equalTo(userId)
+//     .then((snapshot) => {
+//       if (snapshot.exists()) {
+//         res = snapshot.val();
+//       } else {
+//         res = null;
+//       }
+//     })
+//     .catch((e) => {
+//       console.log(e);
+//     });
+//   return res;
+// }
 
 export async function getPosts(limit = 0) {
   let res = [];
@@ -98,7 +128,7 @@ export async function getPosts(limit = 0) {
 }
 
 export async function getPostById(uid) {
-  let res={};
+  let res = {};
 
   await database
     .ref("Posts")

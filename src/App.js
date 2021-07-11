@@ -54,6 +54,7 @@ function App(props) {
             token: localStorage.getItem("token"),
             uid: localStorage.getItem("uid"),
             displayName: localStorage.getItem("displayName"),
+            email: localStorage.getItem("email"),
           },
         });
       }

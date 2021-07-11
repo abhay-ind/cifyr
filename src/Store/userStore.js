@@ -8,6 +8,7 @@ const initState = {
   imgUrl: undefined,
   token: undefined,
   uid: "",
+  email:"",
 };
 
 export const userSlice = createSlice({
@@ -20,10 +21,12 @@ export const userSlice = createSlice({
       state.uid = action.payload.uid;
       state.token = action.payload.token;
       state.displayName = action.payload.displayName;
+      state.email = action.payload.email;
       localStorage.setItem("isLogin", true);
       localStorage.setItem("token", action.payload.token);
       localStorage.setItem("uid", action.payload.uid);
       localStorage.setItem("displayName", action.payload.displayName);
+      localStorage.setItem("email", action.payload.email);
 
       // return state;
     },
@@ -33,6 +36,7 @@ export const userSlice = createSlice({
       localStorage.removeItem("token");
       localStorage.removeItem("uid");
       localStorage.removeItem("displayName");
+      localStorage.removeItem("email");
       action.payload.history.push("/");
       // localStorage.setItem("isLogin", false);
       // localStorage.setItem("token", null);

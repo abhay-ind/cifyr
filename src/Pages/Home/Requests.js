@@ -7,6 +7,11 @@ import { getPosts } from "../../Services/firebase/User";
 import { UPDATE_POSTS } from "../../Store/postStore";
 import Card from "./Card";
 // import { Card } from "react-bootstrap";
+export const computeRemainingDays = (datePosted, noOfDays) => {
+  var remaining = datePosted + noOfDays * 24 * 60 * 60 * 1000 - Date.now();
+  remaining = remaining / (1000 * 60 * 60 * 24);
+  return parseInt(Math.round(remaining));
+};
 function Requests(props) {
   // const [startup, setStartup] = useState(true);
 
@@ -24,11 +29,7 @@ function Requests(props) {
     // }
   }, []);
   const posts = props.posts.posts;
-  const computeRemainingDays = (datePosted, noOfDays) => {
-    var remaining = datePosted + noOfDays * 24 * 60 * 60 * 1000 - Date.now();
-    remaining = remaining / (1000 * 60 * 60 * 24);
-    return parseInt(Math.round(remaining));
-  };
+
   const settings = {
     dots: true,
     autoplay: true,
@@ -48,7 +49,7 @@ function Requests(props) {
           justifyContent: "center",
         }}
       >
-        {console.log(posts)}
+        {/* {console.log(posts)} */}
         {Object.keys(posts || {}).length > 0 ? (
           <Slider {...settings}>
             {Object.keys(posts).map((el) => (

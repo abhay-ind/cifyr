@@ -77,11 +77,10 @@ const steps = {
   ],
   borrower: [
     "Login/Register into the site using traditional email - password method, or OAuth (preferred).",
-    "Based on your preferences, we suggest you a list of borrowers",
-    "You can plan to invest in a specific amount, or recurringly deposit.",
-    "For any queries, you can directly comment on the post, and the borrower.",
-    "Borrower returns the amount in the agreed time, via the site.",
-    "Chat Feature is provided to directly contact the borrower.",
+    "You get an option to create a post by using the Create Post",
+    "Your Profile section show your details, and the posts created by you.",
+    "Under every post you have the amount invested so far, and time remaining.",
+    "Chat Feature is provided to directly respond to the queries of the investor.",
   ],
 };
 export default Steps;

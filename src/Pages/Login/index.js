@@ -16,11 +16,11 @@ var provider = new firebase.auth.FacebookAuthProvider();
 
 function Login(props) {
   const history = useHistory();
-  const dispatchLoginEvent = (token, uid, displayName) => {
+  const dispatchLoginEvent = (token, uid, displayName, email) => {
     //   useDispatch({ type: LOGIN });
     //   console.log("dispatched");
     //   // useDispatch({ type: LOGOUT });
-    props.dispatch({ type: LOGIN, payload: { token, uid, displayName } });
+    props.dispatch({ type: LOGIN, payload: { token, uid, displayName,email } });
     // props.dispatch({
     //   type: UPDATE_USER_DETAILS,
     //   payload: { uid, displayName },
@@ -104,7 +104,7 @@ function Login(props) {
                     setTimeout(() => {
                       setShowToast(false);
                       history.push("/");
-                      dispatchLoginEvent(token, user.uid, user.displayName);
+                      dispatchLoginEvent(token, user.uid, user.displayName, user.email);
                       // dispatchLoginEvent(token);
                     }, 750);
                   })
@@ -145,9 +145,10 @@ function Login(props) {
                       var token = credential.accessToken;
                       // ...
                     }
-                    dispatchLoginEvent(token);
+                    
                     // The signed-in user info.
                     var user = result.user;
+                    dispatchLoginEvent(token, user.uid, user.displayName, user.email);
                   })
                   .catch((error) => {
                     // Handle Errors here.
@@ -179,9 +180,11 @@ function Login(props) {
                       var token = credential.accessToken;
                       // ...
                     }
-                    dispatchLoginEvent(token);
+                    // dispatchLoginEvent(token);
                     // The signed-in user info.
                     var user = result.user;
+                    dispatchLoginEvent(token, user.uid, user.displayName, user.email);
+
                   })
                   .catch((error) => {
                     // Handle Errors here.

@@ -13,7 +13,7 @@ const Tag = (props) => {
     >
       <div className="d-flex" style={{ justifyContent: "space-between" }}>
         <h5>{props.name}</h5>
-        <span>$ 50000</span>
+        <span>$ {props.amount}</span>
       </div>
     </div>
   );
@@ -63,11 +63,11 @@ function TopInvestors() {
         className=" mt-0 p-1 w-75"
         style={{ background: "white", alignSelf: "center" }}
       >
-        <Tag name="Harvy Richards" />
-        <Tag name="Harvy Richards" />
-        <Tag name="Harvy Richards" />
-        <Tag name="Harvy Richards" />
-        <Tag name="Harvy Richards" />
+        <Tag name="Harvy Richards" amount="50000"/>
+        <Tag name="Edmund David" amount="35000"/>
+        <Tag name="Ram Singh"  amount="20000"/>
+        <Tag name="Simon Karve" amount="12000"/>
+        <Tag name="Kin Yang" amount="10000" />
       </div>
     </div>
   );

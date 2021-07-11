@@ -77,25 +77,18 @@ function ChatSystem() {
             msg="hello shall we finalise the deal!"
           />
           <ChatOption
-            name="Simon S"
+            name="Richard Smith"
             src={
-              "https://otakukart.com/wp-content/uploads/2020/02/Best-Monkey-D.-Luffy-Facts-in-One-Piece-You-Didn%E2%80%99t-Know-About-1200x900.jpg"
+              "https://i.pinimg.com/originals/e9/be/67/e9be67dd130aee203aaed715ddfcf75c.png"
             }
-            msg="hello shall we finalise the deal!"
+            msg="Hey, hows the status of your work?"
           />
-          <ChatOption
-            name="Simon S"
+         <ChatOption
+            name="Samuel D'Souza"
             src={
-              "https://otakukart.com/wp-content/uploads/2020/02/Best-Monkey-D.-Luffy-Facts-in-One-Piece-You-Didn%E2%80%99t-Know-About-1200x900.jpg"
+              "https://i.pinimg.com/736x/b7/4e/68/b74e686c93030a733c64cc451d50e59e.jpg"
             }
-            msg="hello shall we finalise the deal!"
-          />
-          <ChatOption
-            name="Simon S"
-            src={
-              "https://otakukart.com/wp-content/uploads/2020/02/Best-Monkey-D.-Luffy-Facts-in-One-Piece-You-Didn%E2%80%99t-Know-About-1200x900.jpg"
-            }
-            msg="hello shall we finalise the deal!"
+            msg="Lets  meet over a cup of coffee, virtually!"
           />
         </div>
       )}
