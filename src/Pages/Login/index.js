@@ -10,17 +10,22 @@ import {
 } from "react-social-login-buttons";
 import firebase from "firebase";
 import { googleSignIn } from "../../Services/firebase/fbAuth";
-import { LOGIN } from "../../Store/userStore";
+import { LOGIN, UPDATE_USER_DETAILS } from "../../Store/userStore";
 import { useHistory } from "react-router-dom";
 var provider = new firebase.auth.FacebookAuthProvider();
 
 function Login(props) {
   const history = useHistory();
-  const dispatchLoginEvent = (token) => {
+  const dispatchLoginEvent = (token, uid, displayName) => {
     //   useDispatch({ type: LOGIN });
     //   console.log("dispatched");
     //   // useDispatch({ type: LOGOUT });
-    props.dispatch({ type: LOGIN, payload: { token } });
+    props.dispatch({ type: LOGIN, payload: { token, uid, displayName } });
+    // props.dispatch({
+    //   type: UPDATE_USER_DETAILS,
+    //   payload: { uid, displayName },
+    // });
+    // console.log("uid:", uid);
   };
   const [err, setErr] = useState(false);
   const [showToast, setShowToast] = useState(false);
@@ -91,15 +96,16 @@ function Login(props) {
                     var user = result.user;
                     // console.log(token,user)
                     // ...
-                    console.log(user);
+                    // console.log(user);
                     setMsg("Login Successful!");
                     setErr(false);
                     setShowToast(true);
-
+                    // console.log(user.uid)
                     setTimeout(() => {
                       setShowToast(false);
-                      history.push('/');
-                      dispatchLoginEvent(token);
+                      history.push("/");
+                      dispatchLoginEvent(token, user.uid, user.displayName);
+                      // dispatchLoginEvent(token);
                     }, 750);
                   })
                   .catch((error) => {
@@ -126,7 +132,6 @@ function Login(props) {
                 width: "33%",
                 fontSize: 12,
               }}
-              
               onClick={() => {
                 firebase
                   .auth()

@@ -1,5 +1,10 @@
-import { mdiTimerSand, mdiTimerSandEmpty, mdiTimerSandFull } from "@mdi/js";
-import { INR } from "currency-symbol-map/map";
+import {
+  mdiCurrencyEth,
+  mdiTimerSand,
+  mdiTimerSandEmpty,
+  mdiTimerSandFull,
+} from "@mdi/js";
+import currencyToSymbolMap, { INR } from "currency-symbol-map/map";
 import React, { useState } from "react";
 import { Card as BCard, ProgressBar } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
@@ -7,7 +12,10 @@ import InvestorIcon from "../../Components/InvestorIcon";
 import { mock_bg_url, mock_img_url } from "../../Store/mock";
 let timeout = null;
 function Card(props) {
-  const [showComplete, setShowComplete] = useState(false);
+  // console.log(props.isCommentScreen)
+  const [showComplete, setShowComplete] = useState(
+    !props.isCommentScreen ? false : true
+  );
   const history = useHistory();
   return (
     <div>
@@ -17,27 +25,27 @@ function Card(props) {
           history.push("/posts/" + props.id);
         }}
         onMouseOver={() => {
-          console.log('enter')
-          setShowComplete(true);
+          // console.log('enter')
+          if (!props.isCommentScreen) setShowComplete(true);
           // if (timeout) clearTimeout(timeout);
         }}
         onMouseOut={() => {
-          console.log('leave')
-          setShowComplete(false);
+          // console.log('leave')
+          if (!props.isCommentScreen) setShowComplete(false);
           // timeout = setTimeout(() => {
           //   timeout=null;
           // }, 500);
         }}
-        className="d-flex m-1"
+        className={"d-flex m-1"+ ((props.isCommentScreen)?" m-5":"")}
         style={{
           width: "fit-content",
-          maxWidth: 350,
+          maxWidth: props.isCommentScreen? '75%': 350,
           borderRadius: 10,
           overflow: "hidden",
           border: 0,
           background: "rgb(250 250 250)",
           boxShadow: showComplete ? "0 0 15px grey" : "",
-          cursor: "pointer",
+          cursor: !props.isCommentScreen ? "pointer" : "",
           // position: showComplete ? "absolute" : "relative",
         }}
       >
@@ -60,15 +68,19 @@ function Card(props) {
               width: "100%",
             }}
           >
-            Simson Watson
+            {props.name}
           </h5>
           <h6 className="text-truncate p-1 m-1 mb-2">{props.title}</h6>
-          {showComplete && <p className="p-1 ml-3 mr-3 mb-2 ">{props.desc}</p>}
+          {(showComplete || props.isCommentScreen) && (
+            <p className="p-1 ml-3 mr-3 mb-2 ">{props.desc}</p>
+          )}
           <div
             className="d-flex ml-3 mr-3 mb-2"
             style={{ justifyContent: "space-between" }}
           >
-            <h5 className="m-0">{INR + " " + props.total}</h5>
+            <h5 className="m-0">
+              {currencyToSymbolMap[props.curr] + " " + props.total}
+            </h5>
             <div className="d-flex align-items-center">
               {/* <img src={mdiTimerSandFull}/> */}
               <svg

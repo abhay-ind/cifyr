@@ -1,5 +1,9 @@
 import firebase from "firebase";
+import firebaseConfig from "./fbConfig";
 
+try {
+  firebase.initializeApp(firebaseConfig);
+} catch {}
 var database = firebase.database();
 export async function createUser(userid, data) {
   let status = 0;
@@ -46,6 +50,7 @@ export async function getUserProfile(userid) {
 }
 
 export async function createPost(userId, data) {
+  // console.log('uid: '+userId,data)
   var newPostKey = database.ref("Posts").push();
   await newPostKey.set(data);
   await database
@@ -55,7 +60,7 @@ export async function createPost(userId, data) {
     .set({ postId: newPostKey.key });
 }
 
-export async function getPosts(userId) {
+export async function getPostsByUid(userId) {
   let res = [];
   await database
     .ref("Posts")
@@ -72,6 +77,61 @@ export async function getPosts(userId) {
     });
   return res;
 }
+
+export async function getPosts(limit = 0) {
+  let res = [];
+  await database
+    .ref("Posts")
+    .limitToLast(limit)
+    .get()
+    .then((snapshot) => {
+      if (snapshot.exists()) {
+        res = snapshot.val();
+      } else {
+        res = null;
+      }
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+  return res;
+}
+
+export async function getPostById(uid) {
+  let res={};
+
+  await database
+    .ref("Posts")
+    .child(uid)
+    .get()
+    .then((snapshot) => (res["post"] = snapshot.val()))
+    .catch((e) => console.log(e));
+  await database
+    .ref("Comments")
+    .child(uid)
+    .get()
+    .then((snapshot) => (res["comment"] = snapshot.val()))
+    .catch((e) => console.log(e));
+  return res;
+}
+export async function getAllPosts() {
+  let res = [];
+  await database
+    .ref("Posts")
+    .get()
+    .then((snapshot) => {
+      if (snapshot.exists()) {
+        res = snapshot.val();
+      } else {
+        res = null;
+      }
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+  return res;
+}
+
 export async function deletePost(userId, postId) {
   let status = 0;
   await database
@@ -82,8 +142,8 @@ export async function deletePost(userId, postId) {
     .catch((e) => (status = 2));
   return status;
 }
-export async function addComment(userId, data) {
-  var newCommKey = database.ref("Comments").child(userId).push();
+export async function addComment(postId, data) {
+  var newCommKey = database.ref("Comments").child(postId).push();
   newCommKey.set(data);
 }
 

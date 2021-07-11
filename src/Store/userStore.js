@@ -2,50 +2,46 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initState = {
   username: "",
-  firstName: "",
-  lastName: "",
+  displayName: "",
   isInvestor: undefined,
   isLogin: false,
   imgUrl: undefined,
   token: undefined,
+  uid: "",
 };
-
-// export const LOGIN = "LOGIN";
-// export const LOGOUT = "LOGOUT";
-// export const UPDATE_USER_DETAILS = "UPDATE_USER_DETAILS";
-
-// const userReducer = (state = initState, action) => {
-//   switch (action) {
-//     case action.type == LOGIN:
-//       localStorage.setItem("isLogin", true);
-//       localStorage.setItem('token',action.payload.token)
-//       return { ...state, isLogin: true };
-//     case action.type == LOGOUT:
-//       return { ...state, isLogin: false };
-//     case action.type == UPDATE_USER_DETAILS:
-//       return { ...state, ...action.payload };
-//   }
-// };
 
 export const userSlice = createSlice({
   name: "user",
   initialState: initState,
   reducers: {
     LOGIN: (state, action) => {
+      // console.log('in login')
       state.isLogin = true;
+      state.uid = action.payload.uid;
+      state.token = action.payload.token;
+      state.displayName = action.payload.displayName;
       localStorage.setItem("isLogin", true);
       localStorage.setItem("token", action.payload.token);
+      localStorage.setItem("uid", action.payload.uid);
+      localStorage.setItem("displayName", action.payload.displayName);
+
+      // return state;
     },
     LOGOUT: (state, action) => {
       state.isLogin = false;
-      localStorage.removeItem("isLogin")
-      localStorage.removeItem("token")
-      action.payload.history.push('/')
+      localStorage.removeItem("isLogin");
+      localStorage.removeItem("token");
+      localStorage.removeItem("uid");
+      localStorage.removeItem("displayName");
+      action.payload.history.push("/");
       // localStorage.setItem("isLogin", false);
       // localStorage.setItem("token", null);
     },
     UPDATE_USER_DETAILS: (state, action) => {
+      // console.log("user details",state,action.payload)
       state = { ...state, ...action.payload };
+      localStorage.setItem("displayName", action.payload.displayName);
+      // return state;
     },
   },
 });

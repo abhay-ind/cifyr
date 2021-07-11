@@ -17,3 +17,7 @@
 .navbar#titlebar {
   background: #1a1d1f !important;
 }
+
+#commentFormEditor {
+  flex: 1;
+}
