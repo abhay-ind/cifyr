@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import Avatar from "../Avatar";
 
 const ChatOption = (props) => {
   const width = +props.size || 50;
@@ -11,19 +12,7 @@ const ChatOption = (props) => {
         cursor: "pointer",
       }}
     >
-      <div
-        className="mr-2"
-        style={{
-          width: width,
-          height: width,
-          display: "flex",
-          placeContent: "center",
-          overflow: "hidden",
-          borderRadius: width,
-        }}
-      >
-        <img src={props.src} style={{ width: width*1.35,height:'fit-content' }} />
-      </div>
+      <Avatar src={props.src} size={props.width} />
       <div className="d-flex flex-column">
         <h6 className="m-0">{props.name}</h6>
         <span>{props.msg}</span>

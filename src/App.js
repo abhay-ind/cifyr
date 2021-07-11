@@ -4,17 +4,21 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Home from "./Pages/Home";
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { connect, useSelector } from "react-redux";
 import Titlebar from "./Components/Titlebar";
 import Login from "./Pages/Login";
-import ChatSystem from "./Components/Chat";
 import CreatePost from "./Pages/CreatePost";
 import Chat from "./Components/Chat1";
 import {addComment,allTimeTopInvestors,createPost,createTransaction,createUser, getUserProfile, lastWeekTopInvestors, updateTransactionAddInvest} from "./Services/firebase/User";
+import Post from "./Pages/Post";
+import UserProfile from "./Pages/UserProfile";
+import { LOGIN } from "./Store/userStore";
+import TermsAndConditions from "./Components/TermsAndConditions";
+
 // import Store from "./Store";
 // console.log();
-function App() {
+function App(props) {
   const user = useSelector((state) => state.user);
   console.log(user);
   addComment("Abhay",{CommentId:"sajas",comment:"hey"})
@@ -28,6 +32,20 @@ function App() {
   console.log(allTimeTopInvestors())
   console.log(lastWeekTopInvestors())
   
+  const [startup, setStartup] = useState(true);
+  useEffect(() => {
+  
+    if (startup) {
+      if (localStorage.getItem("isLogin")) {
+        // console.log('here lgoin')
+        props.dispatch({
+          type: LOGIN,
+          payload: { token: localStorage.getItem("token") },
+        });
+      }
+      setStartup(false);
+    }
+  }, [startup]);
   return (
     <React.Fragment>
       <div className="App">
@@ -36,20 +54,37 @@ function App() {
             <Route exact path="/">
               <Titlebar />
               <Home />
-              <ChatSystem />
             </Route>
-            <Route exact path="/login">
+            <Route path="/terms&conditions">
+              <TermsAndConditions />
+            </Route>
+            <Route path="/posts/:id">
               <Titlebar />
-
-              <Login />
+              <Post />
             </Route>
-            <Route exact path="/post/create">
-              <Titlebar />
 
-              <CreatePost />
-            </Route>
+            {!user.isLogin && (
+              <Route exact path="/login">
+                <Titlebar />
+                <Login />
+              </Route>
+            )}
+            {user.isLogin && (
+              <>
+                <Route exact path="/post/create">
+                  <Titlebar />
+                  <CreatePost />
+                </Route>
+
+                <Route path="/user/profile">
+                  <Titlebar />
+                  <UserProfile />
+                </Route>
+              </>
+            )}
             <Route>
-              <h3>404 not found</h3>
+              <Titlebar />
+              <h3 className="m-3">404 not found</h3>
             </Route>
           </Switch>
         </Router>
@@ -59,5 +94,8 @@ function App() {
     </React.Fragment>
   );
 }
+const mapStateToProps = (state) => {
+  return state;
+};
 
-export default App;
+export default connect(mapStateToProps)(App);

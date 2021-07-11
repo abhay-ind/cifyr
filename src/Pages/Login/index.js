@@ -1,6 +1,7 @@
 // import { Button } from "bootstrap";
-import React from "react";
-import { Card, Form, Button } from "react-bootstrap";
+// import {  } from "bootstrap";
+import React, { useState } from "react";
+import { Card, Form, Button, Toast } from "react-bootstrap";
 import { useDispatch, connect } from "react-redux";
 import {
   FacebookLoginButton,
@@ -10,14 +11,20 @@ import {
 import firebase from "firebase";
 import { googleSignIn } from "../../Services/firebase/fbAuth";
 import { LOGIN } from "../../Store/userStore";
+import { useHistory } from "react-router-dom";
 var provider = new firebase.auth.FacebookAuthProvider();
+
 function Login(props) {
+  const history = useHistory();
   const dispatchLoginEvent = (token) => {
     //   useDispatch({ type: LOGIN });
     //   console.log("dispatched");
     //   // useDispatch({ type: LOGOUT });
     props.dispatch({ type: LOGIN, payload: { token } });
   };
+  const [err, setErr] = useState(false);
+  const [showToast, setShowToast] = useState(false);
+  const [msg, setMsg] = useState("gajhksjld");
   // console.log(props);
   return (
     <div
@@ -84,8 +91,16 @@ function Login(props) {
                     var user = result.user;
                     // console.log(token,user)
                     // ...
-                    dispatchLoginEvent(token);
                     console.log(user);
+                    setMsg("Login Successful!");
+                    setErr(false);
+                    setShowToast(true);
+
+                    setTimeout(() => {
+                      setShowToast(false);
+                      history.push('/');
+                      dispatchLoginEvent(token);
+                    }, 750);
                   })
                   .catch((error) => {
                     // Handle Errors here.
@@ -96,6 +111,13 @@ function Login(props) {
                     // The firebase.auth.AuthCredential type that was used.
                     var credential = error.credential;
                     // ...
+                    console.log("err");
+                    setMsg("Login Failed: " + errorMessage);
+                    setErr(true);
+                    setShowToast(true);
+                    setTimeout(() => {
+                      setShowToast(false);
+                    }, 1250);
                   });
               }}
             />
@@ -171,6 +193,25 @@ function Login(props) {
           </Form.Group>
         </Form>
       </Card>
+      <Toast
+        show={showToast}
+        style={{
+          position: "absolute",
+          bottom: 0,
+        }}
+        className="m-3"
+      >
+        {/* <Toast.Header>
+          <img src="holder.js/20x20?text=%20" className="rounded me-2" alt="" />
+          <strong className="me-auto">Bootstrap</strong>
+          <small>11 mins ago</small>
+        </Toast.Header> */}
+        <Toast.Body>
+          <span style={{ color: err ? "red" : "#00db00", fontWeight: "600" }}>
+            {msg}
+          </span>
+        </Toast.Body>
+      </Toast>
     </div>
   );
 }
