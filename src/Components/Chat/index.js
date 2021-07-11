@@ -64,6 +64,7 @@ function ChatSystem() {
           className="d-flex flex-column p-1"
           style={
             {
+              background:'white'
               // border: "1px solid grey",
             }
           }
